@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EVM生态导航</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- 顶部 big tag -->
+    <div id="top-tags" class="container">
+        <div class="big-tag" data-url="">无</div>
+        <div class="big-tag" data-url="">无</div>
+    
+        <!-- 新增的切换按钮 -->
+        <div class="big-tag" id="switch-button-buy">跨链购买切换</div>
+        <div class="big-tag" id="switch-button-mint">跨链铸造切换</div>
+    </div>
+
+    <!-- 所有其他分组容器 -->
+    <div class="container" id="group-tags-container"></div>
+
+    <script>
+    (() => {
+        const tagGroups = [
+            {
+                title: "espresso",
+                tags: [
+                    { name: "layer3", url: "https://app.layer3.xyz/campaigns/brewing-the-future" },
+                    { name: "OKX钱包主页", url: "chrome-extension://mcohilncbfahbmgdjkbpemcciiolgcge/home.html" },
+                    { name: "D B C D", url: "" },
+                    { name: "邮箱注册", url: "https://mail.163.com/register/index.htm?from=163mail&utm_source=163mail#/normal" },
+                    { name: "存款-eth.cash", url: "https://app.eth.cash/" }
+                ]
+            },
+            {
+                title: "opensea",
+                tags: [
+                    { name: "opensea汇总", url: "https://taochen991228.github.io/opensea/" }
+                ]
+            },
+            {
+            title: "跨链",
+            tags: [
+                { name: "relay", url: "https://relay.link/bridge/ethereum" },
+                { name: "rotue", url: "https://app.routernitro.com/swap" },
+                { name: "bungee", url: "https://www.bungee.exchange/" },
+                { name: "jumper", url: "https://jumper.exchange/zh" },
+                { name: "pancakeswap", url: "https://pancakeswap.finance/swap" },
+                { name: "izumi", url: "https://izumi.finance/trade/swap" },
+                { name: "uniswap", url: "https://app.uniswap.org/swap" },
+            ]
+            },
+            {
+                title: "okx",
+                tags: [
+                    { name: "okx-开启/关闭", url: "chrome://extensions/?id=mcohilncbfahbmgdjkbpemcciiolgcge" },
+                ]
+            },
+            {
+                title: "APE",
+                tags: [
+                    { name: "re:imagined", url: "https://opensea.io/collection/re-imagined-" }
+                ]
+            },
+            {
+                title: "Flow",
+                tags: [
+                    { name: "NBA Top Shot", url: "https://opensea.io/collection/nba-top-shot" }
+                ]
+            },
+            {
+                title: "Avax",
+                tags: [
+                    { name: "MapleStory", url: "https://opensea.io/collection/msu-name/activity" }
+                ]
+            },
+            {
+                title: "ARB",
+                tags: [
+                    { name: "Zeeverse: Items", url: "https://opensea.io/collection/zeeverse-items" },
+                    { name: "arbzukiswap", url: "https://opensea.io/collection/arbzukiswap" }
+                ]
+            },
+            {
+                title: "Shape",
+                tags: [
+                    { name: "Moveable Type", url: "https://opensea.io/collection/moveable-type-shape/activity" }
+                ]
+            },
+            {
+                title: "Unichain",
+                tags: [
+                    { name: "tinyass unicorns", url: "https://opensea.io/collection/tinyass-unicorns/activity" }
+                ]
+            }
+        ];
+        
+
+        const crossChainTagGroups = [
+        {
+            title: "",
+            tags: [
+            { name: "", url: "https://opensea.io/collection/virtual-vanguards-1/overview" },
+            { name: "", url: "https://opensea.io/collection/fantasy-fighters/overview" },
+            { name: "", url: "https://opensea.io/collection/space-shooters-1/overview" },
+            { name: "", url: "https://opensea.io/collection/retro-rumble/overview" },
+            { name: "", url: "https://opensea.io/collection/sports-spectacular/overview" },
+            { name: "", url: "https://opensea.io/collection/fractal-frenzy-2/overview" },
+            { name: "", url: "https://opensea.io/collection/color-chaos-1/overview" },
+            { name: "", url: "https://opensea.io/collection/shape-symphony-1/overview" },
+            { name: "", url: "https://opensea.io/collection/abstract-ascent/overview" },
+            { name: "", url: "https://opensea.io/collection/infinite-illusions-3/overview" },
+            { name: "", url: "https://opensea.io/collection/geometric-glory/overview" },
+            { name: "", url: "https://opensea.io/collection/surreal-sequences/overview" },
+            { name: "", url: "https://opensea.io/collection/conceptual-canvas/overview" },
+            { name: "", url: "https://opensea.io/collection/abstract-allure-5/overview" },
+            { name: "", url: "https://opensea.io/collection/creative-constellations/overview" },
+            { name: "", url: "https://opensea.io/collection/feline-finesse/overview" },
+            { name: "", url: "https://opensea.io/collection/canine-canopy/overview" },
+            { name: "", url: "https://opensea.io/collection/avian-aesthetics/overview" },
+            { name: "", url: "https://opensea.io/collection/reptilian-rhapsody/overview" },
+            { name: "", url: "https://opensea.io/collection/set-up-your-drop/overview" },
+            { name: "", url: "https://opensea.io/collection/pixelpinnacle/overview" },
+            { name: "", url: "https://opensea.io/collection/yberchronicle/overview" },
+            { name: "", url: "https://opensea.io/collection/pixelpioneer-3/overview" },
+            { name: "", url: "https://opensea.io/collection/mysticmint-1/overview" },
+            { name: "", url: "https://opensea.io/collection/etherealecho-3/overview" },
+            { name: "", url: "https://opensea.io/collection/aetherarcane/overview" },
+            { name: "", url: "https://opensea.io/collection/nebulanirvana/overview" },
+            { name: "", url: "https://opensea.io/collection/cyberchronicle/overview" },
+            { name: "", url: "https://opensea.io/collection/xiaohuolong/overview" },
+            { name: "", url: "https://opensea.io/collection/celestialcipher-2/overview" },
+            { name: "", url: "https://opensea.io/collection/quantumcanvas-3/overview" },
+            { name: "", url: "https://opensea.io/collection/digitaldawn-1/overview" },
+            { name: "", url: "https://opensea.io/collection/genesisgems-2/overview" },
+            { name: "", url: "https://opensea.io/collection/quantumquirk/overview" },
+            { name: "", url: "https://opensea.io/collection/aetherartifacts-1/overview" },
+            { name: "", url: "https://opensea.io/collection/pixelpotion-1/overview" },
+            { name: "", url: "https://opensea.io/collection/cyberserenade/overview" },
+            { name: "", url: "https://opensea.io/collection/jienigui-1/overview" },
+            { name: "", url: "https://opensea.io/collection/luminouslabyrinth-2/overview" },
+            { name: "", url: "https://opensea.io/collection/celestialcipher-3/overview" },
+            { name: "", url: "https://opensea.io/collection/block-black-cat/overview" },
+            { name: "", url: "https://opensea.io/collection/etherealessence-4/overview" },
+            { name: "", url: "https://opensea.io/collection/digitaldreamscape-6/overview" },
+            { name: "", url: "https://opensea.io/collection/mysticmosaic-1/overview" },
+            { name: "", url: "https://opensea.io/collection/quantumcanvas-4/overview" },
+            { name: "", url: "https://opensea.io/collection/mysticmuse-2/overview" },
+            { name: "", url: "https://opensea.io/collection/digitaldynamo-4/overview" },
+            { name: "", url: "https://opensea.io/collection/quantumquilt-1/overview" },
+            { name: "", url: "https://opensea.io/collection/etherealechoes-3/overview" }
+            ]
+  } 
+    ];
+
+        // 生成一个随机标签组，title 是随机tag的name，tags里只有这个tag
+        function getRandomTagGroup(tagGroups) {
+            const allTags = tagGroups.flatMap(group => group.tags);
+            if (allTags.length === 0) return { title: '', tags: [] };
+
+            const randomTag = allTags[Math.floor(Math.random() * allTags.length)];
+            return {
+                title: randomTag.name,
+                tags: [randomTag]
+            };
+        }
+
+   
+
+        function createTagElement(tag) {
+            const el = document.createElement('div');
+            el.className = 'tag';
+            el.textContent = tag.name;
+            el.dataset.url = tag.url;
+            el.addEventListener('click', () => {
+                window.open(tag.url, '_blank');
+            });
+            return el;
+        }
+
+        // 通用渲染函数，接收标签组数组参数
+        function renderGroups(groups) {
+            const container = document.getElementById('group-tags-container');
+            container.innerHTML = '';
+
+            groups.forEach(group => {
+                const card = document.createElement('div');
+                card.className = 'group-card';
+
+                const title = document.createElement('div');
+                title.className = 'category-title';
+                title.textContent = group.title || '';  // 防止空title报错
+                card.appendChild(title);
+
+                const tagGroup = document.createElement('div');
+                tagGroup.className = 'tag-group';
+
+                group.tags.forEach(tag => {
+                    tagGroup.appendChild(createTagElement(tag));
+                });
+
+                card.appendChild(tagGroup);
+                container.appendChild(card);
+            });
+        }
+
+
+        function bindBigTagClicks() {
+            document.querySelectorAll('.big-tag').forEach(el => {
+                el.addEventListener('click', () => {
+                    const url = el.dataset.url;
+                    if (url) {
+                        window.open(url, '_blank');
+                    }
+                });
+            });
+        }
+
+
+
+
+        crossChainTagGroups.forEach(group => {
+            group.tags.forEach(tag => {
+                // 提取 URL 中 collection/ 和 /overview 之间的部分作为 name
+                const match = tag.url.match(/collection\/([^\/]+)\//);
+                tag.name = match ? match[1] : '';
+            });
+            });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            bindBigTagClicks();
+
+            // 页面初始渲染默认标签组
+            renderGroups(tagGroups);
+        });
+
+
+
+        document.getElementById("switch-button-buy").addEventListener("click", () => {
+            bindBigTagClicks();
+            renderGroups(tagGroups);
+
+        });
+
+        // 按钮点击切换渲染crossChainTagGroups
+        document.getElementById("switch-button-mint").addEventListener("click", () => {
+            const randomGroup = getRandomTagGroup(crossChainTagGroups);
+            const combinedGroups = [...crossChainTagGroups, randomGroup];
+            renderGroups(combinedGroups);
+
+        });
+
+
+
+    })();
+    </script>
+</body>
+</html>
