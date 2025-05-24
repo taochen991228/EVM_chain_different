@@ -11,10 +11,10 @@
 
     <!-- 顶部 big tag -->
     <div id="top-tags" class="container">
-        <div class="big-tag" data-url="">无</div>
-        <div class="big-tag" data-url="">无</div>
-    
-        <!-- 新增的切换按钮 -->
+        <div class="big-tag" data-url="chrome-extension://mcohilncbfahbmgdjkbpemcciiolgcge/home.html">OKX钱包</div>
+        
+         <div class="big-tag" id="insert-button-rari">添加RARI链</div>
+
         <div class="big-tag" id="switch-button-buy">跨链购买切换</div>
         <div class="big-tag" id="switch-button-mint">跨链铸造切换</div>
     </div>
@@ -28,21 +28,22 @@
             {
                 title: "espresso",
                 tags: [
-                    { name: "layer3-week-1", url: "https://app.layer3.xyz/campaigns/brewing-the-future" },
+                    // { name: "layer3-week-1", url: "https://app.layer3.xyz/campaigns/brewing-the-future" },
                     { name: "layer3-2 week（RARI）", url: "https://app.layer3.xyz/activations/brewing-the-future-rari" },
                     { name: "layer3-2 week（MGX）", url: "https://app.layer3.xyz/activations/brewing-the-future-arbitrum" },
                     { name: "OKX钱包主页", url: "chrome-extension://mcohilncbfahbmgdjkbpemcciiolgcge/home.html" },
-                    // { name: "D B C D", url: "" },
-                    { name: "邮箱注册", url: "https://mail.163.com/register/index.htm?from=163mail&utm_source=163mail#/normal" },
-                    { name: "存款-eth.cash", url: "https://app.eth.cash/" }
+                    // { name: "邮箱注册", url: "https://mail.163.com/register/index.htm?from=163mail&utm_source=163mail#/normal" },
+                    // { name: "存款-eth.cash", url: "https://app.eth.cash/" }
                 ]
             },
-            // {
-            //     title: "b3",
-            //     tags: [
-            //         { name: "解除质押", url: "https://stake.b3.fun/" },
-            //     ]
-            // },
+            {
+                title: "相关操作",
+                tags: [
+                    { name: "添加RARI链", url: "https://taochen991228.github.io/opensea/" },
+                    { name: "ARB to RARI", url: `https://bridge.arbitrum.io/?amount=${getRandomAmount()}&destinationChain=rari-mainnet&sourceChain=arbitrum-one&tab=bridge` },
+
+                ]
+            },
             {
                 title: "opensea",
                 tags: [
@@ -91,7 +92,7 @@
                 // { name: "retro-Bridge-ARB", url: "https://app.retrobridge.io/?destination=Arbitrum+One&tokenFrom=ETH&source=Rari+Chain&tokenTo=ETH" },
                 // { name: "retro-Bridge-BASE", url: "https://app.retrobridge.io/?destination=Base&tokenFrom=ETH&source=Rari+Chain&tokenTo=ETH" },
                 // { name: "retro-Bridge-OP", url: "https://app.retrobridge.io/?destination=Optimism&tokenFrom=ETH&source=Rari+Chain&tokenTo=ETH" },
-
+                 { name: "Layerswap", url: "https://layerswap.io/app" },
 
                 // { name: "Owlto_to_arb", url: "https://owlto.finance/?from=RARI&to=ARBitrum" },
                 // { name: "Owlto_to_base", url: "https://owlto.finance/?from=RARI&to=Base" },
@@ -242,6 +243,14 @@
             });
         }
 
+        // 随机生成 0.005 到 0.01 之间的小数，保留 4 位小数
+        function getRandomAmount(min = 0.0075, max = 0.0080) {
+            return (Math.random() * (max - min) + min).toFixed(6);
+        }
+
+
+
+
 
 
 
@@ -260,6 +269,53 @@
             renderGroups(tagGroups);
         });
 
+
+
+        document.getElementById("insert-button-rari").addEventListener("click", () => {
+            bindBigTagClicks();
+            // 再执行 MetaMask 相关代码
+            if (typeof window.ethereum === "undefined") {
+            console.error("MetaMask 未检测到，请先安装 MetaMask！");
+            alert("MetaMask 未检测到，请先安装 MetaMask！");
+            } else {
+            addRariChain();
+            }
+        
+
+            async function addRariChain() {
+                try {
+                // 请求连接 MetaMask 钱包
+                await window.ethereum.request({ method: "eth_requestAccounts" });
+
+                // RARI 链的参数
+                const chainParams = {
+                    chainId: "0x52415249", // 十六进制的 1380012617
+                    chainName: "RARI Chain",
+                    nativeCurrency: {
+                    name: "Ethereum",
+                    symbol: "ETH",
+                    decimals: 18,
+                    },
+                    rpcUrls: ["https://mainnet.rpc.rarichain.org/http"],
+                    blockExplorerUrls: ["https://mainnet.explorer.rarichain.org/"],
+                };
+
+                // 添加 RARI 链到 MetaMask
+                await window.ethereum.request({
+                    method: "wallet_addEthereumChain",
+                    params: [chainParams],
+                });
+
+                console.log("✅ RARI Chain 已成功添加到 MetaMask！");
+                alert("✅ RARI Chain 已成功添加到 MetaMask！");
+                } catch (error) {
+                console.error("❌ 添加 RARI Chain 失败:", error.message || error);
+                alert("❌ 添加 RARI Chain 失败: " + (error.message || error));
+                }
+            }
+
+
+        });
 
 
         document.getElementById("switch-button-buy").addEventListener("click", () => {
