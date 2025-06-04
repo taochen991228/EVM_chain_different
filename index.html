@@ -11,7 +11,7 @@
 
     <!-- 顶部 big tag -->
     <div id="top-tags" class="container">
-        <div class="big-tag" data-url="chrome-extension://mcohilncbfahbmgdjkbpemcciiolgcge/home.html">OKX钱包</div>
+        <div class="big-tag" id="insert-button-okx" >OKX钱包</div>
 
          <div class="big-tag" id="insert-button-rari">添加RARI链</div>
 
@@ -24,13 +24,23 @@
 
     <script>
     (() => {
+
+        const coins = [
+        "BTC", "ETH", "TRUMP", "SOL", "DOGE", "ARB",
+        "XRP", "TON", "FARTCOIN", "GRASS", "SUI", "WAL",
+        "EIGEN", "LINK","NEAR","WIF","POPCAT","TIA","SEI",
+        "TAIKO","VIRTUAL","APE","ALGO","MOVE","PROMPT","NXPC","ZRO"
+        ];
+
         const tagGroups = [
             {
                 title: "espresso",
                 tags: [
-                    // { name: "layer3-week-1", url: "https://app.layer3.xyz/campaigns/brewing-the-future" },
-                    { name: "layer3-2 week（RARI）", url: "https://app.layer3.xyz/activations/brewing-the-future-rari" },
-                    { name: "layer3-2 week（MGX）", url: "https://app.layer3.xyz/activations/brewing-the-future-arbitrum" },
+                    { name: "总体-L3", url: "https://app.layer3.xyz/campaigns/brewing-the-future" },
+                    { name: "Caldera", url: "https://app.layer3.xyz/activations/brewing-the-future-caldera" },
+                    { name: "Logx", url: "https://app.layer3.xyz/activations/brewing-the-future-logx" },
+                    // { name: "layer3-2 week（RARI）", url: "https://app.layer3.xyz/activations/brewing-the-future-rari" },
+                    // { name: "layer3-2 week（MGX）", url: "https://app.layer3.xyz/activations/brewing-the-future-arbitrum" },
                     { name: "OKX钱包主页", url: "chrome-extension://mcohilncbfahbmgdjkbpemcciiolgcge/home.html" },
                     // { name: "邮箱注册", url: "https://mail.163.com/register/index.htm?from=163mail&utm_source=163mail#/normal" },
                     // { name: "存款-eth.cash", url: "https://app.eth.cash/" }
@@ -38,9 +48,25 @@
             },
             {
                 title: "相关操作",
+                tags: [          
+                    {
+                    name: "Logx 随机",
+                    url: `https://app.logx.network/trade/${getRandomCoin()}`
+                    },
+
+
+
+                ]
+            },
+            {
+                title: "相关操作",
                 tags: [
-                    // { name: "添加RARI链", url: "https://taochen991228.github.io/opensea/" },
-                    { name: "ARB to RARI", url: `https://bridge.arbitrum.io/?amount=${getRandomAmount()}&destinationChain=rari-mainnet&sourceChain=arbitrum-one&tab=bridge` },
+                    {
+                    name: "Logx 随机-备份",
+                    url: `https://app.logx.network/trade/${getRandomCoin()}`
+                    },
+
+
 
                 ]
             },
@@ -243,9 +269,10 @@
             });
         }
 
-        // 随机生成 0.005 到 0.01 之间的小数，保留 4 位小数
-        function getRandomAmount(min = 0.0075, max = 0.0080) {
-            return (Math.random() * (max - min) + min).toFixed(6);
+                // 随机获取币种字符串函数
+        function getRandomCoin() {
+        const idx = Math.floor(Math.random() * coins.length);
+        return coins[idx];
         }
 
 
@@ -320,6 +347,10 @@
             bindBigTagClicks();
             renderGroups(tagGroups);
 
+        });
+
+        document.getElementById("insert-button-okx").addEventListener("click", () => {
+            window.open('chrome-extension://mcohilncbfahbmgdjkbpemcciiolgcge/home.html', '_blank');
         });
 
         // 按钮点击切换渲染crossChainTagGroups
